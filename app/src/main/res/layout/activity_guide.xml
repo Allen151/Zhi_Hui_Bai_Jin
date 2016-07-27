@@ -6,12 +6,28 @@
     android:layout_height="match_parent"
     tools:context="com.example.qzl.zhi_hui_bai_jin.GuideActivity">
 
-    <TextView
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_guid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+    <Button
+        android:id="@+id/btn_guide_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="我是新手引导页"
-        android:id="@+id/textView2"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp"
+        android:text="开始体验"/>
+
+    <LinearLayout
+        android:id="@+id/ll_guide_container"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp">
+    </LinearLayout>
+
 </RelativeLayout>
