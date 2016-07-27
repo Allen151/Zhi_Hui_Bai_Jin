@@ -1,6 +1,7 @@
 package com.example.qzl.zhi_hui_bai_jin;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -12,6 +13,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+
+import com.example.qzl.zhi_hui_bai_jin.utils.PrefUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +62,12 @@ public class GuideActivity extends Activity {
             //页面被选中的时候
             @Override
             public void onPageSelected(int position) {
-
+                if (position == mImageViewList.size() - 1){
+                    //最后一个页面显示开始体验的按钮
+                    mBtn_guide_start.setVisibility(View.VISIBLE);
+                }else {
+                    mBtn_guide_start.setVisibility(View.INVISIBLE);
+                }
             }
             //页面状态改变的时候
             @Override
@@ -84,6 +92,17 @@ public class GuideActivity extends Activity {
                 //layout方法执行结束的回调
                 mMPointDistance = mll_guide_container.getChildAt(1).getLeft() - mll_guide_container.getChildAt(0).getLeft();
 //                Log.d("tag","小红点移动的距离:"+mMPointDistance);
+            }
+        });
+
+        mBtn_guide_start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //更新sp,已经不是第一次进入了
+                PrefUtils.setBoolean(getApplicationContext(),"is_first_enter",false);
+                //跳到主页面
+                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                finish();
             }
         });
     }
