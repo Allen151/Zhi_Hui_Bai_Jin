@@ -55,5 +55,5 @@ public abstract class BaseFragment extends Fragment {
      * 初始数据，必须由子类实现
      * @return
      */
-    public abstract View initData();
+    public abstract void initData();
 }
