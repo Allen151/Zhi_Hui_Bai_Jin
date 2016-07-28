@@ -3,11 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <android.support.v4.view.ViewPager
+    <com.example.qzl.zhi_hui_bai_jin.view.NoScrollViewPager
+        android:id="@+id/nsvp_fcontent_content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
-    </android.support.v4.view.ViewPager>
+    </com.example.qzl.zhi_hui_bai_jin.view.NoScrollViewPager>
     <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

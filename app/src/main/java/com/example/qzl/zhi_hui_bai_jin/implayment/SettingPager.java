@@ -27,5 +27,7 @@ public class SettingPager extends BasePager {
         view.setTextSize(22);
         view.setGravity(Gravity.CENTER);
         mFl_base_pager_content.addView(view);
+        //修改页面标题
+        mTv_base_pager_title.setText("设置");
     }
 }
