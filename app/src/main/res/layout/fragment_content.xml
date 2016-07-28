@@ -10,6 +10,7 @@
         android:layout_weight="1">
     </com.example.qzl.zhi_hui_bai_jin.view.NoScrollViewPager>
     <RadioGroup
+        android:id="@+id/rg_fcontent_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bottom_tab_bg"
