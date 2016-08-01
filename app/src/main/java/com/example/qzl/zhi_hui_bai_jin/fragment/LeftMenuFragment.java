@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.example.qzl.zhi_hui_bai_jin.MainActivity;
 import com.example.qzl.zhi_hui_bai_jin.R;
 import com.example.qzl.zhi_hui_bai_jin.domain.NewsMenu;
+import com.example.qzl.zhi_hui_bai_jin.implayment.NewsCenterPager;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -48,6 +49,7 @@ public class LeftMenuFragment extends BaseFragment {
      * @param data
      */
     public void setMenuData(ArrayList<NewsMenu.NewsMenuData> data){
+        mCurrentPos = 0;//当前选中的位置归零
         //更新页面
         mNewsMenuDatas = data;
         mMAdapter = new LeftMenuAdapter();
@@ -59,8 +61,22 @@ public class LeftMenuFragment extends BaseFragment {
                 mMAdapter.notifyDataSetChanged();//刷新listView
                 //收起侧边栏
                 toggle();
+                //侧边栏收起之后，要改变新闻中心的FrameLayout中的内容
+                setCurrentDetailPager(i);
             }
         });
+    }
+
+    //设置当前的菜单详情页
+    private void setCurrentDetailPager(int i) {
+        //获取新闻中心的对象
+        MainActivity mainUI = (MainActivity) mActivity;
+        //获取contentFragment
+        ContentFragment fragment = mainUI.getContentFragment();
+        //获取新闻中心
+        NewsCenterPager newsCenterPager = fragment.getNewsCenterPager();
+        //修改新闻中心的frameLayout
+        newsCenterPager.setCurrentDetailPager(i);
     }
 
     /**

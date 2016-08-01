@@ -157,4 +157,8 @@ public class ContentFragment extends BaseFragment {
             mNsvp_fcontent_content.removeView((View) object);
         }
     }
+    public NewsCenterPager getNewsCenterPager(){
+        NewsCenterPager pager = (NewsCenterPager) mPagers.get(1);
+        return pager;
+    }
 }
