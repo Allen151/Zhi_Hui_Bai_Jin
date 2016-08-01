@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.TextView;
 
 import com.example.qzl.zhi_hui_bai_jin.base.BasePager;
@@ -29,5 +30,7 @@ public class SmartServicePager extends BasePager {
         mFl_base_pager_content.addView(view);
         //修改页面标题
         mTv_base_pager_title.setText("生活");
+        //显示菜单按钮
+        mBtn_base_pager_menu.setVisibility(View.VISIBLE);
     }
 }
