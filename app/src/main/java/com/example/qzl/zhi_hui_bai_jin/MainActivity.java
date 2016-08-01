@@ -30,7 +30,7 @@ public class MainActivity extends SlidingFragmentActivity {
         mSlidingMenu = getSlidingMenu();
         //设置触摸方式为全屏
         mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-        mSlidingMenu.setBehindOffset(400);//屏幕预留200像素宽度
+        mSlidingMenu.setBehindOffset(500);//屏幕预留200像素宽度
 
         initFragment();
     }

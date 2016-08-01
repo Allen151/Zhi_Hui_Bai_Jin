@@ -6,6 +6,7 @@
     android:orientation="vertical">
     <ListView
         android:id="@+id/lv_fragmentleft_list"
+        android:layout_marginTop="90dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></ListView>
 </LinearLayout>

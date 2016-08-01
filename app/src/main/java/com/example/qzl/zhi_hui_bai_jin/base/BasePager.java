@@ -6,7 +6,9 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.qzl.zhi_hui_bai_jin.MainActivity;
 import com.example.qzl.zhi_hui_bai_jin.R;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 /**
  * 五个标签页的基类
@@ -32,10 +34,23 @@ public class BasePager {
         mTv_base_pager_title = (TextView) view.findViewById(R.id.tv_base_pager_title);
         mBtn_base_pager_menu = (ImageButton) view.findViewById(R.id.btn_base_pager_menu);
         mFl_base_pager_content = (FrameLayout) view.findViewById(R.id.fl_base_pager_content);
-
+        mBtn_base_pager_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toggle();
+            }
+        });
         return view;
     }
 
+    /**
+     * 打开或者关闭侧边栏
+     */
+    private void toggle() {
+        MainActivity mainUI = (MainActivity) mActivity;
+        SlidingMenu slidingMenu = mainUI.getSlidingMenu();
+        slidingMenu.toggle();//如果当前状态是开，调运后就是关，反之亦然
+    }
     /**
      * 初始化数据
      */
