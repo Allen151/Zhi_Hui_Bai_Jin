@@ -2,6 +2,7 @@ package com.example.qzl.zhi_hui_bai_jin.implayment;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 import com.example.qzl.zhi_hui_bai_jin.base.BasePager;
 import com.example.qzl.zhi_hui_bai_jin.domain.NewsMenu;
 import com.example.qzl.zhi_hui_bai_jin.global.GlobalConstants;
+import com.example.qzl.zhi_hui_bai_jin.utils.CacheUtils;
 import com.google.gson.Gson;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -42,6 +44,12 @@ public class NewsCenterPager extends BasePager {
         //显示菜单按钮
         mBtn_base_pager_menu.setVisibility(View.VISIBLE);
 
+        //先判断有没有缓存，如果有的话，先读取缓存
+        String cache = CacheUtils.getCache(GlobalConstants.CATEGORY_URL,mActivity);
+        if (!TextUtils.isEmpty(cache)){
+            Log.d("tag","发现缓存了。。。");
+            processData(cache);
+        }
         //请求服务器获取数据
         //开源框架 xUtils
         getDataFromServer();
@@ -63,6 +71,8 @@ public class NewsCenterPager extends BasePager {
                 Log.d("tag","服务器返回结果 mResult = "+mResult);
                 // Gson 解析
                 processData(mResult);
+                //写缓存
+                CacheUtils.setCache(GlobalConstants.CATEGORY_URL,mResult,mActivity);
             }
 
             @Override
@@ -81,6 +91,7 @@ public class NewsCenterPager extends BasePager {
         // Gson：Google的Json
         Gson gson = new Gson();
         NewsMenu data = gson.fromJson(json, NewsMenu.class);
-        System.out.println("解析结果："+data);
+//        System.out.println("解析结果："+data);
+
     }
 }
