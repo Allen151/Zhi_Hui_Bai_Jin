@@ -9,8 +9,10 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.qzl.zhi_hui_bai_jin.MainActivity;
 import com.example.qzl.zhi_hui_bai_jin.base.BasePager;
 import com.example.qzl.zhi_hui_bai_jin.domain.NewsMenu;
+import com.example.qzl.zhi_hui_bai_jin.fragment.LeftMenuFragment;
 import com.example.qzl.zhi_hui_bai_jin.global.GlobalConstants;
 import com.example.qzl.zhi_hui_bai_jin.utils.CacheUtils;
 import com.google.gson.Gson;
@@ -92,6 +94,10 @@ public class NewsCenterPager extends BasePager {
         Gson gson = new Gson();
         NewsMenu data = gson.fromJson(json, NewsMenu.class);
 //        System.out.println("解析结果："+data);
-
+        //获取侧边栏对象
+        MainActivity mainUI = (MainActivity) mActivity;
+        LeftMenuFragment leftMenuFragment = mainUI.getLeftMenuFragment();
+        //给侧边栏设置数据
+        leftMenuFragment.setMenuData(data.data);
     }
 }
