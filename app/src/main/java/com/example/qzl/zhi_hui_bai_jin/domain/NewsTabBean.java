@@ -10,7 +10,7 @@ public class NewsTabBean {
     public NewsTab data;
     public class NewsTab{
         public String more;
-        public ArrayList <NewsData> news;
+        public ArrayList<NewsData> news;
         public ArrayList <TopNews> topnews;
     }
     //新闻列表对象

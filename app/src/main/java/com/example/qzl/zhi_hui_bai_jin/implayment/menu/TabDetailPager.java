@@ -2,9 +2,9 @@ package com.example.qzl.zhi_hui_bai_jin.implayment.menu;
 
 import android.app.Activity;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.qzl.zhi_hui_bai_jin.R;
@@ -12,7 +12,10 @@ import com.example.qzl.zhi_hui_bai_jin.base.BaseMenuDetailPager;
 import com.example.qzl.zhi_hui_bai_jin.domain.NewsMenu;
 import com.example.qzl.zhi_hui_bai_jin.domain.NewsTabBean;
 import com.example.qzl.zhi_hui_bai_jin.global.GlobalConstants;
+import com.example.qzl.zhi_hui_bai_jin.utils.CacheUtils;
+import com.example.qzl.zhi_hui_bai_jin.view.TopNewsViewPager;
 import com.google.gson.Gson;
+import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -21,6 +24,8 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
+import java.util.ArrayList;
+
 /**
  * Created by Qzl on 2016-08-02.
  */
@@ -28,13 +33,15 @@ public class TabDetailPager extends BaseMenuDetailPager{
     private NewsMenu.NewsTabData mTabData;//单个页签的网络数据
 //    private TextView mView;
     @ViewInject(R.id.vp_tab_detail_top_news)
-    private ViewPager mViewPager;
+    private TopNewsViewPager mViewPager;
     private final String mUrl;
+
+    private ArrayList<NewsTabBean.TopNews> mTopNews;
+    private BitmapUtils mBitmapUtils;
 
     public TabDetailPager(Activity activity, NewsMenu.NewsTabData newsTabData) {
         super(activity);
         mTabData = newsTabData;
-
         mUrl = GlobalConstants.SERVER_URL + mTabData.url;
     }
 
@@ -53,6 +60,10 @@ public class TabDetailPager extends BaseMenuDetailPager{
     @Override
     public void initData() {
 //        mView.setText(mTabData.title);
+        String cache = CacheUtils.getCache(mUrl,mActivity);
+        if (cache != null){
+            processData(cache);
+        }
         getDataFromServer();
     }
 
@@ -63,6 +74,8 @@ public class TabDetailPager extends BaseMenuDetailPager{
             public void onSuccess(ResponseInfo<String> responseInfo) {
                 String result = responseInfo.result;
                 processData(result);
+                //设置缓存
+                CacheUtils.setCache(mUrl,result,mActivity);
             }
 
             @Override
@@ -78,16 +91,22 @@ public class TabDetailPager extends BaseMenuDetailPager{
     private void processData(String result) {
         Gson gson = new Gson();
         NewsTabBean newsTabBean = gson.fromJson(result, NewsTabBean.class);
-        
-
+        //头条新闻填充数据
+        mTopNews = newsTabBean.data.topnews;
+        if (mTopNews != null){
+            mViewPager.setAdapter(new TopNewsAdapter());
+        }
     }
 
     //头条新闻数据适配器
     class TopNewsAdapter extends PagerAdapter{
+        public TopNewsAdapter(){
+            mBitmapUtils = new BitmapUtils(mActivity);
+        }
 
         @Override
         public int getCount() {
-            return 0;
+            return mTopNews.size();
         }
 
         @Override
@@ -97,7 +116,16 @@ public class TabDetailPager extends BaseMenuDetailPager{
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            return super.instantiateItem(container, position);
+            ImageView view = new ImageView(mActivity);
+            view.setImageResource(R.drawable.topnews_item_default);
+            view.setScaleType(ImageView.ScaleType.FIT_XY);
+            String imageUrl = mTopNews.get(position).topimage;//图片的下载链接
+            //下载图片，将图片设置给imageView，避免内存溢出，缓存
+            //BitmapUtils->xUtils
+            mBitmapUtils.display(view,imageUrl);
+
+            container.addView(view);
+            return view;
         }
 
         @Override

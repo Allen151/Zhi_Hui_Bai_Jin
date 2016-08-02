@@ -3,10 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <android.support.v4.view.ViewPager
+    <com.example.qzl.zhi_hui_bai_jin.view.TopNewsViewPager
         android:id="@+id/vp_tab_detail_top_news"
         android:layout_width="match_parent"
-        android:layout_height="180dp">
-
-    </android.support.v4.view.ViewPager>
+        android:layout_height="180dp"/>
 </LinearLayout>
