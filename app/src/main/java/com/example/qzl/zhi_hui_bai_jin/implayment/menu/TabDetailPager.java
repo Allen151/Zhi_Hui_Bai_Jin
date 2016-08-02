@@ -2,9 +2,11 @@ package com.example.qzl.zhi_hui_bai_jin.implayment.menu;
 
 import android.app.Activity;
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.qzl.zhi_hui_bai_jin.R;
@@ -34,6 +36,10 @@ public class TabDetailPager extends BaseMenuDetailPager{
 //    private TextView mView;
     @ViewInject(R.id.vp_tab_detail_top_news)
     private TopNewsViewPager mViewPager;
+
+    @ViewInject(R.id.tv_tab_detail_title)
+    private TextView tvTitle;
+
     private final String mUrl;
 
     private ArrayList<NewsTabBean.TopNews> mTopNews;
@@ -95,6 +101,26 @@ public class TabDetailPager extends BaseMenuDetailPager{
         mTopNews = newsTabBean.data.topnews;
         if (mTopNews != null){
             mViewPager.setAdapter(new TopNewsAdapter());
+            mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                }
+
+                @Override
+                public void onPageSelected(int position) {
+                    //更新头条新闻的标题
+                    NewsTabBean.TopNews topNews = mTopNews.get(position);
+                    tvTitle.setText(topNews.title);
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int state) {
+
+                }
+            });
+            //更新第一个头条新闻标题
+            tvTitle.setText(mTopNews.get(0).title);
         }
     }
 
@@ -102,6 +128,8 @@ public class TabDetailPager extends BaseMenuDetailPager{
     class TopNewsAdapter extends PagerAdapter{
         public TopNewsAdapter(){
             mBitmapUtils = new BitmapUtils(mActivity);
+            //设置加载中的默认图片
+            mBitmapUtils.configDefaultLoadingImage(R.drawable.topnews_item_default);
         }
 
         @Override
@@ -117,7 +145,7 @@ public class TabDetailPager extends BaseMenuDetailPager{
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             ImageView view = new ImageView(mActivity);
-            view.setImageResource(R.drawable.topnews_item_default);
+//            view.setImageResource(R.drawable.topnews_item_default);
             view.setScaleType(ImageView.ScaleType.FIT_XY);
             String imageUrl = mTopNews.get(position).topimage;//图片的下载链接
             //下载图片，将图片设置给imageView，避免内存溢出，缓存
