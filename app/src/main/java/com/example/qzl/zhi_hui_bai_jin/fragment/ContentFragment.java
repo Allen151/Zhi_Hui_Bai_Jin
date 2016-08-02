@@ -47,8 +47,8 @@ public class ContentFragment extends BaseFragment {
         //填充数据
         mPagers.add(new HomePager(mActivity));
         mPagers.add(new NewsCenterPager(mActivity));
-        mPagers.add(new GovAffairsPager(mActivity));
         mPagers.add(new SmartServicePager(mActivity));
+        mPagers.add(new GovAffairsPager(mActivity));
         mPagers.add(new SettingPager(mActivity));
         mNsvp_fcontent_content.setAdapter(new ContentAdapter());
 
