@@ -25,6 +25,7 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
 
@@ -39,6 +40,9 @@ public class TabDetailPager extends BaseMenuDetailPager{
 
     @ViewInject(R.id.tv_tab_detail_title)
     private TextView tvTitle;
+
+    @ViewInject(R.id.indicator)
+    private CirclePageIndicator mIndicator;
 
     private final String mUrl;
 
@@ -101,7 +105,10 @@ public class TabDetailPager extends BaseMenuDetailPager{
         mTopNews = newsTabBean.data.topnews;
         if (mTopNews != null){
             mViewPager.setAdapter(new TopNewsAdapter());
-            mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            mIndicator.setViewPager(mViewPager);
+            mIndicator.setSnap(true);//快照方式展示
+            //事件要设置给Indicator
+            mIndicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 @Override
                 public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -121,6 +128,7 @@ public class TabDetailPager extends BaseMenuDetailPager{
             });
             //更新第一个头条新闻标题
             tvTitle.setText(mTopNews.get(0).title);
+            mIndicator.onPageSelected(0);//默认让第一个选中（解决页面销毁后重新初始化时，Indicator任然保留上个位置的bug）
         }
     }
 
