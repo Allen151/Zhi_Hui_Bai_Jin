@@ -6,9 +6,11 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.qzl.zhi_hui_bai_jin.MainActivity;
 import com.example.qzl.zhi_hui_bai_jin.R;
 import com.example.qzl.zhi_hui_bai_jin.base.BaseMenuDetailPager;
 import com.example.qzl.zhi_hui_bai_jin.domain.NewsMenu;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.viewpagerindicator.TabPageIndicator;
@@ -27,7 +29,7 @@ import java.util.ArrayList;
  * 7 修改样式（背景样式，文字样式）
  * Created by Qzl on 2016-08-01.
  */
-public class NewsMenuDetailPager extends BaseMenuDetailPager{
+public class NewsMenuDetailPager extends BaseMenuDetailPager implements ViewPager.OnPageChangeListener{
 
     @ViewInject(R.id.vp_news_menu_detail)
     private ViewPager mViewPager;
@@ -61,8 +63,49 @@ public class NewsMenuDetailPager extends BaseMenuDetailPager{
         //将指示器和viewPager绑定在一起
         // 注意 ： 必须在viewpager设置完数据之后去绑定
         mIndicator.setViewPager(mViewPager);
+        //设置页面滑动监听
+        //mViewPager.setOnPageChangeListener(this);
+        mIndicator.setOnPageChangeListener(this);//此处必须给指示器设置页面监听，不能个viewPager设置
     }
 
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+//        Log.d("tag : ","当前位置："+position);
+        //页面被选中
+        if (position == 0){
+            //打开侧边栏
+            setSlidingMenuEnable(true);
+        }else {
+            //关闭侧边栏
+            setSlidingMenuEnable(false);
+        }
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
+
+    /**
+     * 开启或禁用菜单栏
+     * @param enable
+     */
+    private void setSlidingMenuEnable(boolean enable) {
+        //获取侧边栏对象
+        MainActivity mainUI = (MainActivity) mActivity;
+        SlidingMenu slidingMenu = mainUI.getSlidingMenu();
+        if (enable){
+            slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+        }else {
+            //设置不可触摸
+            slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
+        }
+    }
     class NewsMenuDeatilAdapter extends PagerAdapter{
         //指定指示器的标题
         @Override
