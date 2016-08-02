@@ -71,6 +71,11 @@ public class TabDetailPager extends BaseMenuDetailPager{
 //        mView.setGravity(Gravity.CENTER);
         View view = View.inflate(mActivity, R.layout.pager_tab_detail,null);
         ViewUtils.inject(this,view);
+
+        //给listView添加头布局
+        View mHeaderView = View.inflate(mActivity,R.layout.list_item_header,null);
+        ViewUtils.inject(this,mHeaderView);//此处必须将头布局也注入
+        mLvList.addHeaderView(mHeaderView);
         return view;
     }
 
@@ -185,6 +190,13 @@ public class TabDetailPager extends BaseMenuDetailPager{
 
     class NewsAdapter extends BaseAdapter{
 
+        private BitmapUtils mBitmapUtils;
+
+        public NewsAdapter(){
+            mBitmapUtils = new BitmapUtils(mActivity);
+            mBitmapUtils.configDefaultLoadingImage(R.drawable.news_pic_default);
+        }
+
         @Override
         public int getCount() {
             return mNewsList.size();
@@ -202,10 +214,30 @@ public class TabDetailPager extends BaseMenuDetailPager{
 
         @Override
         public View getView(int position, View convertView, ViewGroup viewGroup) {
+            ViewHolder holder;
             if (convertView == null){
-
+                convertView = View.inflate(mActivity,R.layout.list_item_news,null);
+                holder = new ViewHolder();
+                holder.ivIcon = (ImageView) convertView.findViewById(R.id.iv_item_news_icon);
+                holder.tvTitle = (TextView) convertView.findViewById(R.id.tv_item_news_title);
+                holder.tvDate = (TextView) convertView.findViewById(R.id.tv_item_news_data);
+                convertView.setTag(holder);
+            }else {
+                holder = (ViewHolder) convertView.getTag();
             }
-            return null;
+            NewsTabBean.NewsData news = getItem(position);
+            //设置标题
+            holder.tvTitle.setText(news.title);
+            //设置时间
+            holder.tvDate.setText(news.pubdate);
+            //设置图片
+            mBitmapUtils.display(holder.ivIcon,news.listimage);
+            return convertView;
         }
+    }
+
+    static class ViewHolder{
+        public ImageView ivIcon;
+        public TextView tvTitle,tvDate;
     }
 }

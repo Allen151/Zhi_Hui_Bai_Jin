@@ -2,10 +2,36 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="10dp">
     <ImageView
+        android:id="@+id/iv_item_news_icon"
         android:layout_width="100dp"
-        android:layout_height="60dp"
+        android:layout_height="70dp"
         android:src="@drawable/image_demo"
-        android:scaleType="centerCrop"/>
+        android:scaleType="fitXY"
+        android:background="#a000"
+        android:padding="1dp"
+        android:layout_marginRight="5dp"/>
+    <TextView
+        android:id="@+id/tv_item_news_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/iv_item_news_icon"
+        android:textSize="18sp"
+        android:textColor="#000"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:text="结的婚呼呼呼呼护好肚饿花都而很多护好肚饿护额u呼和度护好肚饿后盾护额好肚饿护额弄得好肚饿花朵"/>
+    <TextView
+        android:id="@+id/tv_item_news_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/iv_item_news_icon"
+        android:layout_below="@id/tv_item_news_title"
+        android:textSize="16sp"
+        android:textColor="#8000"
+        android:layout_marginTop="5dp"
+        android:text="2015-10-20 16:46"/>
 </RelativeLayout>
