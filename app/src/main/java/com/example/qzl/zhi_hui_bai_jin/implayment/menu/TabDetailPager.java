@@ -5,7 +5,9 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,10 +46,15 @@ public class TabDetailPager extends BaseMenuDetailPager{
     @ViewInject(R.id.indicator)
     private CirclePageIndicator mIndicator;
 
+    @ViewInject(R.id.lv_tab_detail_list)
+    private ListView mLvList;
+
     private final String mUrl;
 
     private ArrayList<NewsTabBean.TopNews> mTopNews;
     private BitmapUtils mBitmapUtils;
+    private ArrayList<NewsTabBean.NewsData> mNewsList;
+    private NewsAdapter mNewsAdapter;
 
     public TabDetailPager(Activity activity, NewsMenu.NewsTabData newsTabData) {
         super(activity);
@@ -130,6 +137,12 @@ public class TabDetailPager extends BaseMenuDetailPager{
             tvTitle.setText(mTopNews.get(0).title);
             mIndicator.onPageSelected(0);//默认让第一个选中（解决页面销毁后重新初始化时，Indicator任然保留上个位置的bug）
         }
+        //列表新闻
+        mNewsList = newsTabBean.data.news;
+        if (mNewsList != null){
+            mNewsAdapter = new NewsAdapter();
+            mLvList.setAdapter(mNewsAdapter);
+        }
     }
 
     //头条新闻数据适配器
@@ -167,6 +180,32 @@ public class TabDetailPager extends BaseMenuDetailPager{
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
             container.removeView((View) object);
+        }
+    }
+
+    class NewsAdapter extends BaseAdapter{
+
+        @Override
+        public int getCount() {
+            return mNewsList.size();
+        }
+
+        @Override
+        public NewsTabBean.NewsData getItem(int position) {
+            return mNewsList.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup viewGroup) {
+            if (convertView == null){
+
+            }
+            return null;
         }
     }
 }

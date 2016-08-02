@@ -47,4 +47,9 @@
         </RelativeLayout>
     </FrameLayout>
 
+    <ListView
+        android:id="@+id/lv_tab_detail_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 </LinearLayout>
