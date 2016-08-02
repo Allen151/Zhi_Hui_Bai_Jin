@@ -13,6 +13,7 @@ import com.example.qzl.zhi_hui_bai_jin.domain.NewsMenu;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.viewpagerindicator.TabPageIndicator;
 
 import java.util.ArrayList;
@@ -138,5 +139,12 @@ public class NewsMenuDetailPager extends BaseMenuDetailPager implements ViewPage
         public void destroyItem(ViewGroup container, int position, Object object) {
             container.removeView((View) object);
         }
+    }
+    @OnClick(R.id.btn_news_menu_detail_next)
+    public void nextPage(View view){
+        //跳到下个页面
+        int currentItem = mViewPager.getCurrentItem();
+        currentItem ++;
+        mViewPager.setCurrentItem(currentItem);
     }
 }
