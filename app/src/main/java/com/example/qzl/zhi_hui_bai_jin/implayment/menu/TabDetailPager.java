@@ -1,6 +1,7 @@
 package com.example.qzl.zhi_hui_bai_jin.implayment.menu;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.qzl.zhi_hui_bai_jin.NewsDetailActivity;
 import com.example.qzl.zhi_hui_bai_jin.R;
 import com.example.qzl.zhi_hui_bai_jin.base.BaseMenuDetailPager;
 import com.example.qzl.zhi_hui_bai_jin.domain.NewsMenu;
@@ -123,6 +125,9 @@ public class TabDetailPager extends BaseMenuDetailPager {
                 TextView tvTitle = (TextView) view.findViewById(R.id.tv_item_news_title);
                 tvTitle.setTextColor(Color.GRAY);
 //                mNewsAdapter.notifyDataSetChanged();//全局刷新，性能比较低
+
+                //跳到新闻详情页面
+                mActivity.startActivity(new Intent(mActivity, NewsDetailActivity.class));
             }
         });
         return view;

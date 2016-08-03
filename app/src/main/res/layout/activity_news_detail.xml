@@ -7,5 +7,25 @@
     tools:context="com.example.qzl.zhi_hui_bai_jin.NewsDetailActivity"
     android:orientation="vertical">
     <include layout="@layout/title_bat"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+    <WebView
+        android:id="@+id/wv_and_news_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+        <ProgressBar
+            android:id="@+id/pb_and_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="invisible"
+            android:indeterminateDrawable="@drawable/custom_progress"
+            style="@android:style/Widget.ProgressBar.Large"
+            />
+    </FrameLayout>
 
 </LinearLayout>
