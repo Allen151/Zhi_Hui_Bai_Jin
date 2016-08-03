@@ -107,7 +107,7 @@ public class TabDetailPager extends BaseMenuDetailPager {
                 //设置缓存
                 CacheUtils.setCache(mUrl, result, mActivity);
                 //收起下拉刷新控件
-                mLvList.onRefreshComplete();
+                mLvList.onRefreshComplete(true);
             }
 
             @Override
@@ -116,7 +116,7 @@ public class TabDetailPager extends BaseMenuDetailPager {
                 error.printStackTrace();
                 Toast.makeText(mActivity, msg, Toast.LENGTH_SHORT).show();
                 //收起下拉刷新控件
-                mLvList.onRefreshComplete();
+                mLvList.onRefreshComplete(false);
             }
         });
     }

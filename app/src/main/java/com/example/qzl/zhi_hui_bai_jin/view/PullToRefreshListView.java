@@ -13,6 +13,9 @@ import android.widget.TextView;
 
 import com.example.qzl.zhi_hui_bai_jin.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * 下拉刷新的listView
  * Created by Qzl on 2016-08-03.
@@ -67,6 +70,16 @@ public class PullToRefreshListView extends ListView {
         mHeaderView.setPadding(0, -mHeaderViewHeight, 0, 0);
         //箭头的动画
         initAnim();
+        setCurrentTime();
+    }
+
+    /**
+     * 设置刷新时间
+     */
+    private void setCurrentTime() {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String time = format.format(new Date());
+        mTvTime.setText(time);
     }
 
     @Override
@@ -81,7 +94,7 @@ public class PullToRefreshListView extends ListView {
                     // actionDown事件会被viewPager消费掉，导致stareY没有复制，此处需要重新获取一下
                     mStartY = (int) ev.getY();
                 }
-                if (mCurrentState == STATE_REFRESHING){
+                if (mCurrentState == STATE_REFRESHING) {
                     //如果是正在刷新的状态，直接跳出
                     break;
                 }
@@ -89,14 +102,14 @@ public class PullToRefreshListView extends ListView {
                 int dy = endY - mStartY;//偏移量
                 int firstVisiblePosition = getFirstVisiblePosition();//当前显示的第一个item的位置
                 //必须下拉并且当前显示的是第一个item
-                if (dy > 0 && firstVisiblePosition == 0){
+                if (dy > 0 && firstVisiblePosition == 0) {
                     int padding = dy - mHeaderViewHeight;//计算当前下拉控件的padding值
-                    mHeaderView.setPadding(0,padding,0,0);
-                    if (padding > 0 && mCurrentState != STATE_RELEASE_TO_REFRESH){
+                    mHeaderView.setPadding(0, padding, 0, 0);
+                    if (padding > 0 && mCurrentState != STATE_RELEASE_TO_REFRESH) {
                         //改为松开刷新
                         mCurrentState = STATE_RELEASE_TO_REFRESH;
                         refreshState();
-                    }else if (padding < 0 && mCurrentState != STATE_PULL_TO_REFRESH){
+                    } else if (padding < 0 && mCurrentState != STATE_PULL_TO_REFRESH) {
                         //改为下拉刷新
                         mCurrentState = STATE_PULL_TO_REFRESH;
                         refreshState();
@@ -106,18 +119,18 @@ public class PullToRefreshListView extends ListView {
                 break;
             case MotionEvent.ACTION_UP:
                 mStartY = -1;
-                if (mCurrentState == STATE_RELEASE_TO_REFRESH){
+                if (mCurrentState == STATE_RELEASE_TO_REFRESH) {
                     mCurrentState = STATE_REFRESHING;
                     refreshState();
                     //完整展示头布局
-                    mHeaderView.setPadding(0,0,0,0);
+                    mHeaderView.setPadding(0, 0, 0, 0);
                     //4 进行回调
                     if (mListener != null) {
                         mListener.onRefresh();
                     }
-                }else if (mCurrentState == STATE_RELEASE_TO_REFRESH){
+                } else if (mCurrentState == STATE_RELEASE_TO_REFRESH) {
                     //隐藏头布局
-                    mHeaderView.setPadding(0,-mHeaderViewHeight,0,0);
+                    mHeaderView.setPadding(0, -mHeaderViewHeight, 0, 0);
                 }
                 break;
         }
@@ -127,11 +140,11 @@ public class PullToRefreshListView extends ListView {
     /**
      * 初始化箭头动画
      */
-    private void initAnim(){
-        mAnimUp = new RotateAnimation(0,-180, Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f);
+    private void initAnim() {
+        mAnimUp = new RotateAnimation(0, -180, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         mAnimUp.setDuration(200);
         mAnimUp.setFillAfter(true);//保持状态
-        mAnimDown = new RotateAnimation(-180,0, Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f);
+        mAnimDown = new RotateAnimation(-180, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         mAnimDown.setDuration(200);
         mAnimDown.setFillAfter(true);//保持状态
     }
@@ -140,7 +153,7 @@ public class PullToRefreshListView extends ListView {
      * 根据当前状态刷新界面
      */
     private void refreshState() {
-        switch (mCurrentState){
+        switch (mCurrentState) {
             case STATE_PULL_TO_REFRESH://下拉刷新
                 mTvTitle.setText("下拉刷新");
                 mPbProgress.setVisibility(View.INVISIBLE);
@@ -166,25 +179,32 @@ public class PullToRefreshListView extends ListView {
     /**
      * 刷新结束，收起控件
      */
-    public void onRefreshComplete(){
-        mHeaderView.setPadding(0,-mHeaderViewHeight,0,0);
+    public void onRefreshComplete(boolean success) {
+
+        mHeaderView.setPadding(0, -mHeaderViewHeight, 0, 0);
         mCurrentState = STATE_RELEASE_TO_REFRESH;
         mTvTitle.setText("下拉刷新");
         mPbProgress.setVisibility(INVISIBLE);
         mIvArrow.setVisibility(VISIBLE);
+        if (success) {//只有刷新之后才更新时间
+            setCurrentTime();
+        }
     }
+
     //3 定义成员变量，接收监听对象
     private OnRefreshListener mListener;
+
     /**
      * 2、暴露接口，设置监听
      */
-    public void setOnRefreshListener(OnRefreshListener listener){
+    public void setOnRefreshListener(OnRefreshListener listener) {
         mListener = listener;
     }
+
     /**
      * 1、下拉刷新的回调接口
      */
-    public interface OnRefreshListener{
+    public interface OnRefreshListener {
         public void onRefresh();
     }
 }
