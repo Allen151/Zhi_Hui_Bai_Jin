@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ListView
+    <com.example.qzl.zhi_hui_bai_jin.view.PullToRefreshListView
         android:id="@+id/lv_tab_detail_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
