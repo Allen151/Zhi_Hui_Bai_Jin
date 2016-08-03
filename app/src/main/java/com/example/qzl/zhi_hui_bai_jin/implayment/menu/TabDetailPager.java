@@ -1,11 +1,14 @@
 package com.example.qzl.zhi_hui_bai_jin.implayment.menu;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,6 +20,7 @@ import com.example.qzl.zhi_hui_bai_jin.domain.NewsMenu;
 import com.example.qzl.zhi_hui_bai_jin.domain.NewsTabBean;
 import com.example.qzl.zhi_hui_bai_jin.global.GlobalConstants;
 import com.example.qzl.zhi_hui_bai_jin.utils.CacheUtils;
+import com.example.qzl.zhi_hui_bai_jin.utils.PrefUtils;
 import com.example.qzl.zhi_hui_bai_jin.view.PullToRefreshListView;
 import com.example.qzl.zhi_hui_bai_jin.view.TopNewsViewPager;
 import com.google.gson.Gson;
@@ -98,6 +102,27 @@ public class TabDetailPager extends BaseMenuDetailPager {
                     //没有数据时，也要收起控件
                     mLvList.onRefreshComplete(true);
                 }
+            }
+        });
+        //设置listView的点击事件
+        mLvList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int headerViewsCount = mLvList.getHeaderViewsCount();//获取头布局的数量
+                position = position - headerViewsCount;//需要减去头布局的占位
+                Log.d("TAG", "第 "+position+"个被点击了");
+
+                NewsTabBean.NewsData news = mNewsList.get(position);
+                // read_ids:1101,1102,1105,1203
+                String readIds = PrefUtils.getString(mActivity,"read_ids","");
+                if (!readIds.contains(news.id+"")) {//只有不包含当前id才追加，避免重复追加同一数据
+                    readIds = readIds + news.id + ",";
+                    PrefUtils.setString(mActivity,"read_ids",readIds);
+                }
+                //要将被点击的item的文字颜色改为灰色，局部刷新，view对象就是当前被点击的对象
+                TextView tvTitle = (TextView) view.findViewById(R.id.tv_item_news_title);
+                tvTitle.setTextColor(Color.GRAY);
+//                mNewsAdapter.notifyDataSetChanged();//全局刷新，性能比较低
             }
         });
         return view;
@@ -299,6 +324,13 @@ public class TabDetailPager extends BaseMenuDetailPager {
             holder.tvTitle.setText(news.title);
             //设置时间
             holder.tvDate.setText(news.pubdate);
+            //已读新闻的回显操作
+            String readIds = PrefUtils.getString(mActivity,"read_ids","");
+            if (readIds.contains(news.id+"")){
+                holder.tvTitle.setTextColor(Color.GRAY);
+            }else {
+                holder.tvTitle.setTextColor(Color.BLACK);
+            }
             //设置图片
             mBitmapUtils.display(holder.ivIcon, news.listimage);
             return convertView;
