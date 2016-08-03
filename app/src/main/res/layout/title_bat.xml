@@ -1,29 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/title_red_bg">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/title_red_bg">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="智慧北京"
-            android:id="@+id/tv_base_pager_title"
-            android:textColor="#ffffff"
-            android:textSize="22sp"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"/>
+    <TextView
+        android:id="@+id/tv_base_pager_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:textColor="#ffffff"
+        android:textSize="22sp"/>
+
+    <ImageButton
+        android:id="@+id/btn_base_pager_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:background="@null"
+        android:src="@drawable/img_menu"
+        />
+
+    <ImageButton
+        android:id="@+id/btn_base_pager_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:background="@null"
+        android:src="@drawable/back"
+        android:visibility="gone"
+        />
+
+    <LinearLayout
+        android:id="@+id/ll_tb_control"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <ImageButton
+            android:id="@+id/btn_base_pager_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btn_base_pager_menu"
-            android:layout_marginLeft="10dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentStart="true"
-            android:src="@drawable/img_menu"
             android:background="@null"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/icon_textsize"
             />
-    </RelativeLayout>
+
+        <ImageButton
+            android:id="@+id/btn_base_pager_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:src="@drawable/icon_share"
+            />
+    </LinearLayout>
+</RelativeLayout>
 
