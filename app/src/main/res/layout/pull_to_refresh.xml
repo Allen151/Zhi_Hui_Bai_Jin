@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:visibility="invisible"
+            android:indeterminateDrawable="@drawable/custom_progress"
             style="@android:style/Widget.ProgressBar.Large"
             />
     </FrameLayout>
