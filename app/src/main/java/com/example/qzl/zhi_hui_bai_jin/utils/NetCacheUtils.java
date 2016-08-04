@@ -22,8 +22,12 @@ public class NetCacheUtils {
     private String mUrl;
 
     private Activity activity;
-    public NetCacheUtils(Activity activity) {
+    private LocalCacheUtils mLocalCacheUtils;
+    private MemoryCacheUtils mMemoryCacheUtils;
+    public NetCacheUtils(Activity activity, LocalCacheUtils localCacheUtils, MemoryCacheUtils memoryCacheUtils) {
         this.activity = activity;
+        mLocalCacheUtils = localCacheUtils;
+        memoryCacheUtils = memoryCacheUtils;
     }
 
     public void getBitmapFormNet(ImageView imageView, String url) {
@@ -54,7 +58,6 @@ public class NetCacheUtils {
                 @Override
                 public void run() {
                     mImageView.setTag(mUrl);//打标记，将当前imageView和URL绑定到了一起
-                    Log.d(TAG, "run: hhhhhhhhhhhhhh");
                 }
             });
             //开始下载图片
@@ -84,6 +87,10 @@ public class NetCacheUtils {
                 String url = (String) mImageView.getTag();
                 if (url.equals(mUrl)) {//判断图片绑定的url是否是当前bitmap的url，如果是，说明图片正确
                     mImageView.setImageBitmap(result);
+                    //写本地缓存
+                    mLocalCacheUtils.setLocalCache(url,result);
+                    //写内存缓存
+                    mMemoryCacheUtils.setMemoryCache(url,result);
                 }
             }
         }
