@@ -19,7 +19,6 @@ import com.example.qzl.zhi_hui_bai_jin.global.GlobalConstants;
 import com.example.qzl.zhi_hui_bai_jin.utils.CacheUtils;
 import com.example.qzl.zhi_hui_bai_jin.utils.MyBitmapUtils;
 import com.google.gson.Gson;
-import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -121,7 +120,7 @@ public class PhotosMenuDetailPager extends BaseMenuDetailPager implements View.O
         private MyBitmapUtils mBitmapUtils;
 
         public PhotoAdapter(){
-            mBitmapUtils = new MyBitmapUtils();
+            mBitmapUtils = new MyBitmapUtils(mActivity);
 //            mBitmapUtils = new BitmapUtils(mActivity);
 //            mBitmapUtils.configDefaultLoadingImage(R.drawable.pic_item_list_default);
         }
