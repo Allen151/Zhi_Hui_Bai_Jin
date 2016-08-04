@@ -3,10 +3,13 @@ package com.example.qzl.zhi_hui_bai_jin.implayment.menu;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -62,8 +65,9 @@ public class TabDetailPager extends BaseMenuDetailPager {
     private BitmapUtils mBitmapUtils;
     private ArrayList<NewsTabBean.NewsData> mNewsList;
     private NewsAdapter mNewsAdapter;
-    private String mMoreUrl;
+    private String mMoreUrl;//下一页数据连接
 
+    private Handler mHandler;
     public TabDetailPager(Activity activity, NewsMenu.NewsTabData newsTabData) {
         super(activity);
         mTabData = newsTabData;
@@ -240,6 +244,54 @@ public class TabDetailPager extends BaseMenuDetailPager {
             if (mNewsList != null) {
                 mNewsAdapter = new NewsAdapter();
                 mLvList.setAdapter(mNewsAdapter);
+            }
+
+            if (mHandler == null){
+                mHandler = new Handler(){
+                    @Override
+                    public void handleMessage(Message msg) {
+                        //更新到下一条
+                        int currentItem = mViewPager.getCurrentItem();
+                        currentItem++;
+                        if (currentItem > mTopNews.size() - 1){
+                            //如果已经到了最后一个页面，跳到第一页
+                            currentItem = 0;
+                        }
+                        mViewPager.setCurrentItem(currentItem);
+                        mHandler.sendEmptyMessageDelayed(0,3000);//继续发送延时3秒的消息，形成内循环
+                    }
+                };
+                //保证启动自动轮播逻辑只执行一次
+                mHandler.sendEmptyMessageDelayed(0,3000);//发送延时3秒的消息
+                mViewPager.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View view, MotionEvent motionEvent) {
+                        switch (motionEvent.getAction()){
+                            case MotionEvent.ACTION_DOWN:
+                                Log.d("TAG", "ACTION_DOWN");
+                                //停止轮播
+                                //删除handler的所有消息
+                                mHandler.removeCallbacksAndMessages(null);
+//                                mHandler.post(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//                                        //在主线程运行
+//                                    }
+//                                });
+                                break;
+                            case MotionEvent.ACTION_CANCEL://取消事件,当按下viewPager后，直接滑动listView，导致抬起事件无法响应，但会走此事件
+                                Log.d("TAG", "ACTION_CANCEL");
+                                mHandler.sendEmptyMessageDelayed(0,3000);
+                                break;
+                            case MotionEvent.ACTION_UP:
+                                Log.d("TAG", "ACTION_UP");
+                                //启动广告
+                                mHandler.sendEmptyMessageDelayed(0,3000);
+                                break;
+                        }
+                        return false;
+                    }
+                });
             }
         }else {
             //加载更多数据
