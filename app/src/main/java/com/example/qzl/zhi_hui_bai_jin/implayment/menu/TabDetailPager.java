@@ -127,7 +127,9 @@ public class TabDetailPager extends BaseMenuDetailPager {
 //                mNewsAdapter.notifyDataSetChanged();//全局刷新，性能比较低
 
                 //跳到新闻详情页面
-                mActivity.startActivity(new Intent(mActivity, NewsDetailActivity.class));
+                Intent intent = new Intent(mActivity, NewsDetailActivity.class);
+                intent.putExtra("url",news.url);
+                mActivity.startActivity(intent);
             }
         });
         return view;
