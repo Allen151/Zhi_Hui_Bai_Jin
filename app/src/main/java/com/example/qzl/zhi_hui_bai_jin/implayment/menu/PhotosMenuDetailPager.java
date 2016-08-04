@@ -17,6 +17,7 @@ import com.example.qzl.zhi_hui_bai_jin.base.BaseMenuDetailPager;
 import com.example.qzl.zhi_hui_bai_jin.domain.PhotosBean;
 import com.example.qzl.zhi_hui_bai_jin.global.GlobalConstants;
 import com.example.qzl.zhi_hui_bai_jin.utils.CacheUtils;
+import com.example.qzl.zhi_hui_bai_jin.utils.MyBitmapUtils;
 import com.google.gson.Gson;
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.HttpUtils;
@@ -116,11 +117,13 @@ public class PhotosMenuDetailPager extends BaseMenuDetailPager implements View.O
 
     class PhotoAdapter extends BaseAdapter{
 
-        private BitmapUtils mBitmapUtils;
+//        private BitmapUtils mBitmapUtils;
+        private MyBitmapUtils mBitmapUtils;
 
         public PhotoAdapter(){
-            mBitmapUtils = new BitmapUtils(mActivity);
-            mBitmapUtils.configDefaultLoadingImage(R.drawable.pic_item_list_default);
+            mBitmapUtils = new MyBitmapUtils();
+//            mBitmapUtils = new BitmapUtils(mActivity);
+//            mBitmapUtils.configDefaultLoadingImage(R.drawable.pic_item_list_default);
         }
         @Override
         public int getCount() {
