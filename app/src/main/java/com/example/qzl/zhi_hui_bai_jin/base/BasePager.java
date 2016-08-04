@@ -18,6 +18,7 @@ public class BasePager {
     public View mRootView;//当前页面的布局对象
     public Activity mActivity;
     public TextView mTv_base_pager_title;
+    public ImageButton mBtnPhoto;//组图切换按钮
     public ImageButton mBtn_base_pager_menu;
     public FrameLayout mFl_base_pager_content;//空的帧布局布局对象，要动态添加布局
 
@@ -34,6 +35,7 @@ public class BasePager {
         mTv_base_pager_title = (TextView) view.findViewById(R.id.tv_base_pager_title);
         mBtn_base_pager_menu = (ImageButton) view.findViewById(R.id.btn_base_pager_menu);
         mFl_base_pager_content = (FrameLayout) view.findViewById(R.id.fl_base_pager_content);
+        mBtnPhoto = (ImageButton) view.findViewById(R.id.btn_tb_photo);
         mBtn_base_pager_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

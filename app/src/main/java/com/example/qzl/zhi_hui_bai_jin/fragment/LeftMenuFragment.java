@@ -77,6 +77,7 @@ public class LeftMenuFragment extends BaseFragment {
         NewsCenterPager newsCenterPager = fragment.getNewsCenterPager();
         //修改新闻中心的frameLayout
         newsCenterPager.setCurrentDetailPager(i);
+
     }
 
     /**
