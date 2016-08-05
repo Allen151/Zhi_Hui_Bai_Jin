@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Window;
+import android.view.WindowManager;
 
 import com.example.qzl.zhi_hui_bai_jin.fragment.ContentFragment;
 import com.example.qzl.zhi_hui_bai_jin.fragment.LeftMenuFragment;
@@ -30,7 +31,12 @@ public class MainActivity extends SlidingFragmentActivity {
         mSlidingMenu = getSlidingMenu();
         //设置触摸方式为全屏
         mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-        mSlidingMenu.setBehindOffset(500);//屏幕预留200像素宽度
+        //mSlidingMenu.setBehindOffset(200);//屏幕预留200像素宽度
+
+        // 屏幕适配 ： width*200/320 * 屏幕宽度
+        WindowManager wm = getWindowManager();
+        int width = wm.getDefaultDisplay().getWidth();
+        mSlidingMenu.setBehindOffset(width * 200 / 320);
         initFragment();
 
     }
@@ -39,14 +45,14 @@ public class MainActivity extends SlidingFragmentActivity {
     /**
      * 初始化fragment
      */
-    private void initFragment(){
+    private void initFragment() {
         //1 拿到fragment管理器
         FragmentManager fm = getSupportFragmentManager();
         // 2 开启事务
         FragmentTransaction transaction = fm.beginTransaction();
         //3 用fragment替换帧布局  参数一：要替换的帧布局id，参数二：要替换的fragment，参数三：标记
-        transaction.replace(R.id.fl_main,new ContentFragment(),TAG_FRAGMENT_CONTENT);
-        transaction.replace(R.id.fl_mian_left_menu,new LeftMenuFragment(),TAG_LEFT_FRAGMENT_MENU);
+        transaction.replace(R.id.fl_main, new ContentFragment(), TAG_FRAGMENT_CONTENT);
+        transaction.replace(R.id.fl_mian_left_menu, new LeftMenuFragment(), TAG_LEFT_FRAGMENT_MENU);
         // 4 提交事务
         transaction.commit();
 
@@ -54,14 +60,14 @@ public class MainActivity extends SlidingFragmentActivity {
     }
 
     //获取侧边栏fragment对象
-    public LeftMenuFragment getLeftMenuFragment(){
+    public LeftMenuFragment getLeftMenuFragment() {
         FragmentManager fm = getSupportFragmentManager();
         LeftMenuFragment fragment = (LeftMenuFragment) fm.findFragmentByTag(TAG_LEFT_FRAGMENT_MENU);
         return fragment;
     }
 
     //获取主页fragment对象
-    public ContentFragment getContentFragment(){
+    public ContentFragment getContentFragment() {
         FragmentManager fm = getSupportFragmentManager();
         ContentFragment fragment = (ContentFragment) fm.findFragmentByTag(TAG_FRAGMENT_CONTENT);
         return fragment;

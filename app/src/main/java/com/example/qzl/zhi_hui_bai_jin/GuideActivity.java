@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.example.qzl.zhi_hui_bai_jin.utils.DensityUtils;
 import com.example.qzl.zhi_hui_bai_jin.utils.PrefUtils;
 
 import java.util.ArrayList;
@@ -125,7 +126,7 @@ public class GuideActivity extends Activity {
             LinearLayout.LayoutParams mParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             if (i > 0){
                 //从第二个点开始设置左边距
-                mParams.leftMargin = 10;
+                mParams.leftMargin = DensityUtils.dip2px(10,getApplicationContext());
             }
             mPoint.setLayoutParams(mParams);//设置布局参数
             mll_guide_container.addView(mPoint);//给容器添加圆点
