@@ -17,8 +17,9 @@ public class MyBitmapUtils {
     private MemoryCacheUtils mMemoryCacheUtils;//内存缓存工具类
     public MyBitmapUtils(Activity activity){
         mLocalCacheUtils = new LocalCacheUtils();//创建本地缓存对象
-        mNetCacheUtils = new NetCacheUtils(activity,mLocalCacheUtils,mMemoryCacheUtils);
         mMemoryCacheUtils = new MemoryCacheUtils();
+        mNetCacheUtils = new NetCacheUtils(activity,mLocalCacheUtils,mMemoryCacheUtils);
+
     }
     public void display(ImageView imageView, String url) {
         //设置默认图片

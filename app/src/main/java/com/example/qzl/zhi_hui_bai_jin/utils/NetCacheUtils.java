@@ -27,7 +27,7 @@ public class NetCacheUtils {
     public NetCacheUtils(Activity activity, LocalCacheUtils localCacheUtils, MemoryCacheUtils memoryCacheUtils) {
         this.activity = activity;
         mLocalCacheUtils = localCacheUtils;
-        memoryCacheUtils = memoryCacheUtils;
+        mMemoryCacheUtils = memoryCacheUtils;
     }
 
     public void getBitmapFormNet(ImageView imageView, String url) {
@@ -85,12 +85,12 @@ public class NetCacheUtils {
                 //由于listView的重用机制导致imageView对象可能被多个item共用，从而可能将错误的图片设置给了imageView对象
                 //所以，需要在此处校验，判断是否是正确的图片
                 String url = (String) mImageView.getTag();
-                if (url.equals(mUrl)) {//判断图片绑定的url是否是当前bitmap的url，如果是，说明图片正确
+                if (mUrl.equals(url)) {//判断图片绑定的url是否是当前bitmap的url，如果是，说明图片正确
                     mImageView.setImageBitmap(result);
                     //写本地缓存
-                    mLocalCacheUtils.setLocalCache(url,result);
+                    mLocalCacheUtils.setLocalCache(mUrl,result);
                     //写内存缓存
-                    mMemoryCacheUtils.setMemoryCache(url,result);
+                    mMemoryCacheUtils.setMemoryCache(mUrl,result);
                 }
             }
         }

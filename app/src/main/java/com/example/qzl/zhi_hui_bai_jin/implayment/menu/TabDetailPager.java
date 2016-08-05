@@ -46,7 +46,6 @@ import java.util.ArrayList;
  */
 public class TabDetailPager extends BaseMenuDetailPager {
     private NewsMenu.NewsTabData mTabData;//单个页签的网络数据
-    //    private TextView mView;
     @ViewInject(R.id.vp_tab_detail_top_news)
     private TopNewsViewPager mViewPager;
 
@@ -63,6 +62,7 @@ public class TabDetailPager extends BaseMenuDetailPager {
 
     private ArrayList<NewsTabBean.TopNews> mTopNews;
     private BitmapUtils mBitmapUtils;
+//    private MyBitmapUtils mBitmapUtils;
     private ArrayList<NewsTabBean.NewsData> mNewsList;
     private NewsAdapter mNewsAdapter;
     private String mMoreUrl;//下一页数据连接
@@ -306,9 +306,17 @@ public class TabDetailPager extends BaseMenuDetailPager {
     //头条新闻数据适配器
     class TopNewsAdapter extends PagerAdapter {
         public TopNewsAdapter() {
+            /**
+             * 使用xutil工具
+             */
             mBitmapUtils = new BitmapUtils(mActivity);
             //设置加载中的默认图片
             mBitmapUtils.configDefaultLoadingImage(R.drawable.topnews_item_default);
+
+            /**
+             * 使用自己的图片缓存工具
+             */
+            //mBitmapUtils = new MyBitmapUtils(mActivity);
         }
 
         @Override
