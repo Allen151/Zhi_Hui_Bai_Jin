@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 
 import com.example.qzl.zhi_hui_bai_jin.utils.DensityUtils;
 import com.example.qzl.zhi_hui_bai_jin.utils.PrefUtils;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -158,5 +159,14 @@ public class GuideActivity extends Activity {
         public void destroyItem(ViewGroup container, int position, Object object) {
             container.removeView((View) object);
         }
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }

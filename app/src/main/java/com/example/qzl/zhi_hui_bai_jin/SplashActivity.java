@@ -11,6 +11,7 @@ import android.view.animation.ScaleAnimation;
 import android.widget.RelativeLayout;
 
 import com.example.qzl.zhi_hui_bai_jin.utils.PrefUtils;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 闪屏页
@@ -91,5 +92,13 @@ public class SplashActivity extends Activity {
 
             }
         });
+    }
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }

@@ -68,6 +68,10 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
 
+        <meta-data android:value="57a4aafe67e58e803d00246f"
+                   android:name="UMENG_APPKEY"/>
+        <meta-data android:value="qzl"
+                   android:name="UMENG_CHANNEL"/>
     </application>
 
 </manifest>

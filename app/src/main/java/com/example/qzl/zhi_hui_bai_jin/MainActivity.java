@@ -10,6 +10,7 @@ import com.example.qzl.zhi_hui_bai_jin.fragment.ContentFragment;
 import com.example.qzl.zhi_hui_bai_jin.fragment.LeftMenuFragment;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 主页面
@@ -71,5 +72,14 @@ public class MainActivity extends SlidingFragmentActivity {
         FragmentManager fm = getSupportFragmentManager();
         ContentFragment fragment = (ContentFragment) fm.findFragmentByTag(TAG_FRAGMENT_CONTENT);
         return fragment;
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }
